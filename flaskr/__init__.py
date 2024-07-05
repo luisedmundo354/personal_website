@@ -39,14 +39,14 @@ def create_app(test_config=None):
     # Initialize Alembic
     alembic.init_app(app)
 
-    #@app.cli.command('init-db') to test database
+    @app.cli.command('init-db') #to test database
     # Ensure the tables are created
     #with app.app_context():
 
-    #def init_db_command():
-    with app.app_context():
-        db.create_all()
-        print('Initialized the database.')
+    def init_db_command():
+        with app.app_context():
+            db.create_all()
+            print('Initialized the database.')
 
     app.register_blueprint(blog.bp)
     app.add_url_rule('/', endpoint='index')

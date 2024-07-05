@@ -20,7 +20,7 @@ class User(db.Model):
     projects: Mapped[List["Project"]] = relationship(back_populates="user")
     profile: Mapped["Profile"] = relationship(back_populates="user")
 
-class Profile(db.model):
+class Profile(db.Model):
     __tablename__="profile"
 
     id: Mapped[int] = mapped_column(primary_key=True)
@@ -51,7 +51,7 @@ class Experience(db.Model):
     experience_images: Mapped[List["ExperienceImage"]] = relationship(back_populates="experience")
     skills: Mapped[List["Skill"]] = relationship(back_populates="experience")
 
-class ExperienceHighlight(db.model):
+class ExperienceHighlight(db.Model):
     __tablename__ = "experience_highlight"
 
     id: Mapped[int] = mapped_column(primary_key=True)
@@ -60,7 +60,7 @@ class ExperienceHighlight(db.model):
 
     experience: Mapped["Experience"] = relationship(back_populates="experience_highlights")
 
-class ExperienceImage(db.model):
+class ExperienceImage(db.Model):
     __tablename__ = "experience_image"
 
     id: Mapped[int] = mapped_column(primary_key=True)
@@ -69,7 +69,7 @@ class ExperienceImage(db.model):
 
     experience: Mapped["Experience"] = relationship(back_populates="experience_images")
 
-class Skill(db.model):
+class Skill(db.Model):
     __tablename__ = "skill"
 
     id: Mapped[int] = mapped_column(primary_key=True)
@@ -80,7 +80,7 @@ class Skill(db.model):
 
 #----------------------------------------------------------------------------------
 
-class Project(db.model):
+class Project(db.Model):
     __tablename__ = "project"
 
     id: Mapped[int] = mapped_column(primary_key=True)
@@ -96,7 +96,7 @@ class Project(db.model):
     project_highlights: Mapped[List["ProjectHighlight"]] = relationship(back_populates="project")
     project_images: Mapped[List["ProjectImage"]] = relationship(back_populates="project")
 
-class ProjectHighlight(db.model):
+class ProjectHighlight(db.Model):
     __tablename__ = "project_highlight"
 
     id: Mapped[int] = mapped_column(primary_key=True)
@@ -105,7 +105,7 @@ class ProjectHighlight(db.model):
 
     project: Mapped["Project"] = relationship(back_populates="project_highlights")
 
-class ProjectImage(db.model):
+class ProjectImage(db.Model):
     __tablename__ = "project_image"
 
     id: Mapped[int] = mapped_column(primary_key=True)
@@ -116,7 +116,7 @@ class ProjectImage(db.model):
 
 #--------------------------------------------------------------------------------------------
 
-class Subscriber(db.model):
+class Subscriber(db.Model):
     __tablename__ = "subscriber"
 
     id: Mapped[int] = mapped_column(primary_key=True)
