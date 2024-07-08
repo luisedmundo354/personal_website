@@ -3,10 +3,11 @@ from flask import Flask
 from flask_sqlalchemy import SQLAlchemy
 from sqlalchemy.orm import DeclarativeBase
 from sqlalchemy import MetaData
+from whitenoise import WhiteNoise
 from . import models
 from .db import db
 from . import auth
-from . import blog
+from . import main
 from flask_alembic import Alembic
 
 alembic = Alembic()
@@ -39,19 +40,24 @@ def create_app(test_config=None):
     # Initialize Alembic
     alembic.init_app(app)
 
-    @app.cli.command('init-db') #to test database
+    #@app.cli.command('init-db') to test database
     # Ensure the tables are created
     #with app.app_context():
 
-    def init_db_command():
-        with app.app_context():
-            db.create_all()
-            print('Initialized the database.')
+    #def init_db_command():
+    with app.app_context():
+        db.create_all()
+        print('Initialized the database.')
 
-    app.register_blueprint(blog.bp)
+    app.register_blueprint(main.bp)
+
     app.add_url_rule('/', endpoint='index')
 
     app.register_blueprint(auth.bp)
+
+    # add whitenoise
+    app.wsgi_app = WhiteNoise(app.wsgi_app, root="flaskr/static/")
+
     # a simple page that says hello
     @app.route('/hello')
     def hello():

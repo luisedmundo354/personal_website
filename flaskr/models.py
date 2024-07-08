@@ -25,10 +25,11 @@ class Profile(db.Model):
 
     id: Mapped[int] = mapped_column(primary_key=True)
     user_id: Mapped[int] = mapped_column(ForeignKey('user.id'))
+    name: Mapped[str] = mapped_column(String(50), nullable=True)
     bio: Mapped[str] = mapped_column(String(256))
     profile_picture: Mapped[str] = mapped_column(String(256))
     email: Mapped[str] = mapped_column(String(100))
-    contact_email: Mapped[str] = mapped_column(String(100))
+    phone: Mapped[str] = mapped_column(String(100))
 
     user: Mapped["User"] = relationship(back_populates="profile")
 
@@ -38,7 +39,7 @@ class Experience(db.Model):
     __tablename__ = "experience"
 
     id: Mapped[int] = mapped_column(primary_key=True)
-    author_id: Mapped[int] = mapped_column(ForeignKey("user.id"))
+    user_id: Mapped[int] = mapped_column(ForeignKey("user.id"))
     job_title: Mapped[str] = mapped_column(String(50))
     company: Mapped[str] = mapped_column(String(100))
     start_date: Mapped[datetime.datetime] = mapped_column(TIMESTAMP)

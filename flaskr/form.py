@@ -13,10 +13,12 @@ from .db import db
 
 bp = Blueprint('blog', __name__)
 
-@bp.route('/')
+@bp.route('/admin')
 def index():
-    posts = db.session.execute(db.select(Post, User).join(Post.user).order_by(Post.created.desc())).scalars().all()
-    return render_template('blog/index.html', posts=posts)
+    profile = db.session.execute(db.select(User, Profile).join(User.profile).where(User.id == 1)).scalars().all()
+    experience = db.session.execute(db.select(Experience, ExperienceHighlight, ExperienceImage, Skill).join(Experience.experience_highlights).join(Experience.experience_images).join(Experience.skills)).scalars().all()
+    project = db.session.execute(db.select(Project, ProjectHighlight, ProjectImage).join(Project.experience_highlights).join(Project.experience_images).join(Project.skills)).scalars().all()
+    return render_template('form/home.html', posts=posts)
 
 @bp.route('/create', methods=('GET', 'POST'))
 @login_required
@@ -37,7 +39,7 @@ def create():
             db.session.commit()
             return redirect(url_for('blog.index'))
 
-    return render_template('blog/create.html')
+    return render_template('form/create.html')
 
 def get_post(id, check_author=True):
     post = db.session.execute(db.select(Post).join(User.posts).where(Post.id==id)).scalar_one()
@@ -70,7 +72,7 @@ def update(id):
             db.session.commit()
             return redirect(url_for('blog.index'))
 
-    return render_template('blog/update.html', post=post)
+    return render_template('form/update.html', post=post)
 
 @bp.route('/<int:id>/delete', methods=('POST',))
 @login_required
@@ -79,4 +81,4 @@ def delete(id):
     post = session.get(Post, id)
     db.session.delete(post)
     db.session.commit()
-    return redirect(url_for('blog.index'))
+    return redirect(url_for('form.index'))
