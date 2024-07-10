@@ -4,6 +4,7 @@ from flask_sqlalchemy import SQLAlchemy
 from sqlalchemy.orm import DeclarativeBase
 from sqlalchemy import MetaData
 from whitenoise import WhiteNoise
+from dotenv import load_dotenv
 from . import models
 from .db import db
 from . import auth
@@ -11,15 +12,25 @@ from . import main
 from flask_alembic import Alembic
 
 alembic = Alembic()
+# Load the database environment config
+load_dotenv()
 
 def create_app(test_config=None):
     # create and configure the app
     app = Flask(__name__, instance_relative_config=True)
-    app.config.from_mapping(
-        SECRET_KEY='dev',
-        SQLALCHEMY_DATABASE_URI='postgresql://lbrenap:edmundo3541@localhost/personaldb',
-        SQLALCHEMY_TRACK_MODIFICATIONS=False,
-    )
+
+    ENV = os.getenv('ENV', 'dev')
+
+    if ENV == 'dev':
+        app.config.from_mapping(
+            SECRET_KEY=os.getenv('SECRET_KEY', 'dev'),
+            SQLALCHEMY_DATABASE_URI = os.getenv('DEV_DATABASE_URI'),
+            SQLALCHEMY_TRACK_MODIFICATIONS=False,
+        )
+    else:
+        app.config.from_mapping(
+            SQLALCHEMY_DATABASE_URI = os.getenv('PROD_DATABASE_URI'),
+        )
 
     if test_config is None:
         # load the instance config, if it exists, when not testing

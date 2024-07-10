@@ -51,7 +51,7 @@
 /* For devices larger than 550px */
 @media (min-width: 550px) {
   .container {
-    width: 80%; }
+    width: 90%; } /* More width 80 before*/
   .column,
   .columns {
     margin-left: 4%; }
@@ -370,6 +370,19 @@ form {
 .u-pull-left {
   float: left; }
 
+/* Class Selector for Specific H5 */
+.bold-heading {
+  font-weight: 700; /* Make it bold */
+}
+
+.close-heading {
+  margin-bottom: 0.5rem; /* Reduce vertical space */
+}
+
+#close-paragraph {
+  margin-top: 0;
+  margin-bottom: 1rem; /* Reduce vertical space */
+}
 
 /* Misc
 –––––––––––––––––––––––––––––––––––––––––––––––––– */

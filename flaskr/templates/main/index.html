@@ -3,26 +3,25 @@
 <div class="container">
     <div class="row">
    <div class="twelve columns profile-section">
-      <h1><strong>{{ user.profile.name }}</strong></h1>
+      <h1 class="bold-heading">{{ user.profile.name }}</h1>
       <div class="row">
-         <div class="six columns">
-            <img src="{{ user.profile.profile_picture }}" alt="Profile Picture" class="u-max-full-width">
-         </div>
-         <div class="six columns">
-            <p>{{ user.profile.bio }}</p>
+         <div class="three columns">
+            <!--<img src="{{ user.profile.profile_picture }}" alt="Profile Picture" class="u-max-full-width">-->
             <p><strong>Email:</strong> {{ user.profile.email }}</p>
             <p><strong>Contact:</strong> {{ user.profile.phone }}</p>
             <p><a class="button" href="https://www.linkedin.com/in/luis-brena/">LinkedIn</a> </p>
-           <p><a class="button" href="{{ url_for('static', filename='pdf/resume_luis_brena.pdf')}}">Resume</a>
-           </p>
+            <p><a class="button" href="{{ url_for('static', filename='pdf/resume_luis_brena.pdf')}}">Resume</a></p>
+         </div>
+         <div class="nine columns">
+            <h4>{{ user.profile.bio }}</h4>
          </div>
       </div>
    </div>
    </div>
 
-    <hr>
+  <!--   <hr>
 
-<!--    <div class="row">
+   <div class="row">
         <div class="twelve columns experience-section">
             <h2>Experience</h2>
             {% for experience in user.experiences %}
@@ -69,21 +68,22 @@
 
     <div class="row">
     <div class="twelve columns project-section">
-        <h2>Projects</h2>
+      <h2 class="bold-heading close-heading">Projects</h2>
         <div class="row">
             {% for project in user.projects %}
                 <div class="six columns">
                     {% for image in project.project_images %}
                        <img src="{{ image.url }}" alt="Project Image" class="u-max-full-width">
                      {% endfor %}
-                    <h5>{{ project.project_title }} at {{ project.company }}</h5>
-                    <p><strong>{{ project.start_date | date_format }} - {{ project.end_date | date_format }}</strong></p>
-                    <p>{{ project.description }}</p>
+                    <h4 class="bold-heading">{{ project.project_title }}</h4>
+                    <p id="close-paragraph">{{ project.company }}</p>
+                    <p id="close-paragraph">{{ project.start_date | date_format }} - {{ project.end_date | date_format }}</p>
+                   <!-- <p>{{ project.description }}</p>
                     <ul>
                         {% for highlight in project.project_highlights %}
                             <li>{{ highlight.content }}</li>
                         {% endfor %}
-                    </ul>
+                    </ul> -->
                 </div>
                 {% if loop.index % 2 == 0 and not loop.last %}
                         </div><div class="row">
